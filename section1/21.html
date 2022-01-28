@@ -10,10 +10,6 @@
 
 <body>
     <div id="app">
-        {{totalPriceMethods()}}
-        {{totalPriceMethods()}}
-
-        {{totalPrice}}
         {{totalPrice}}
     </div>
 
@@ -22,26 +18,48 @@
             el: "#app",
             data() {
                 return {
-                    price: 100,
-                    number: 5
-                }
-            },
-            methods: {
-                totalPriceMethods() {
-                    console.log('methods');
-                    return this.number * this.price
+                    price: 1,
+                    number: 1,
+                    reactiveTest: {
+                        name:'test'
+                    },
+                    books: [
+                    {
+                      id: 1,
+                      title: 'タイトル1',
+                      author: '著者1',
+                      url: 'https://google.com',
+                    },
+                    {
+                      id: 2,
+                      title: 'タイトル2',
+                      author: '著者2',
+                      url: 'https://google.com',
+                    },
+                    {
+                      id: 3,
+                      title: 'タイトル3',
+                      author: '著者3',
+                      url: 'https://google.com',
+                    },
+                  ]
+
                 }
             },
             computed: {
-                totalPrice() {
-                    console.log('computed');
-                    return this.number * this.price
-                }
+                totalPrice: app => app.number * app.price
             },
             watch: {
-
+                books: {
+                    handler(){
+                        console.log('changed');
+                    },
+                    deep: true
+                }
             }
         })
-    </script>
+
+        
+        </script>
 </body>
 </html>

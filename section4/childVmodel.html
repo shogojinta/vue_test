@@ -21,40 +21,50 @@
   </style>
 </head>
 <body>
-  <div id="app" class="parent"> 
-    <emit-test
-        @custom-event="parentMethod"
+  <div id="app" class="parent">
+      <custom-input
+      @child-event = "parentValue = $event"
         class="child"
-    >
-    </emit-test>
+      >
+      </custom-input>
+
+      {{parentValue}}
   </div>
 
   <script>
-    let emitTest = {
-      template:`
-      <div>
-        <button @click="childMethod">子のボタン</button>
-      </div>
-      `,
-      methods:{
-        childMethod(){
-            this.$emit("custom-event","子の値")
+    let customInput = {
+        template:`
+            <div>
+                <input type="text" v-model="childParam">
+            </div>
+        `,
+        data(){
+          return{
+            childValue:""
+          }
+        },
+        computed:{
+          childParam:{
+            get(){
+              return this.childValue
+            },
+            set(value){
+              this.childValue = value
+              this.$emit("child-event", value)
+            }
+
+          }
         }
-      }
     }
 
     let app = new Vue({
       el: "#app",
       components:{
-        emitTest
+        customInput
       },
       data() {
         return {
-        }
-      },
-      methods:{
-        parentMethod(e){
-          console.log(e);
+          parentValue:""
         }
       }
     })

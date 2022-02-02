@@ -1,27 +1,57 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import BookDetail from "@/components/BookDetail.vue"
+import Vue from "vue"
+import VueRouter from "vue-router"
+import BookList from "../views/BookList.vue"
+import Home from "../views/Home.vue"
+import Item from "../views/Item.vue"
+import NotFound from "@/components/NotFound.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: "/",
+    name: "Home",
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
+    path: "/about",
+    name: "About",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/book",
+    name: "BookList",
+    component: BookList
+  },
+  {
+    path: "/book/:id",
+    name: "Book",
+    component: BookDetail,
+    props: route => ({
+      id: Number(route.params.id),
+      title: route.params.title,
+      content: route.params.content,
+    })
+  },
+  {
+    path: "/item/:id",
+    name: "Item",
+    component: Item
+  },
+  {
+    path: "*",
+    // redirect: "/"
+    name: "NotFound",
+    component: NotFound
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes
 })

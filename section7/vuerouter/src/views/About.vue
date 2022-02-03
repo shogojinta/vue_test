@@ -19,5 +19,13 @@
         this.$router.push("/")
       }
     },
+    beforeRouteLeave(to, from, next) {
+      const checkLeave = window.confirm('OK?')
+      if(checkLeave) {
+        next()
+      } else {
+        next(false)
+      }
+    }
   }
 </script>
